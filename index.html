@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego por Roles</title>
+    <link rel="stylesheet" href="juego2.css">
+</head>
+<body class="background">
+    <!-- Audio elements for sound effects -->
+    <audio id="blockSound" src="sounds/block-sound.mp3" preload="auto"></audio>
+    <audio id="shieldBreakSound" src="sounds/shield-break-sound.mp3" preload="auto"></audio>
+
+    <div id="start-screen">
+        <h1>Juego por Roles</h1>
+        <label for="playerNameInput">Ingresa tu nombre: </label>
+        <input type="text" id="playerNameInput">
+        <br>
+        <label for="classSelect">Elige tu clase:</label>
+        <select id="classSelect">
+            <option value="Guerrero">Guerrero</option>
+            <option value="Mago">Mago</option>
+            <option value="Explorador">Explorador</option>
+        </select>
+        <br><br>
+        <button onclick="startGame()">Comenzar Juego</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+        <h2>Jugador: <span id="playerName"></span> (<span id="playerClass"></span>)</h2>
+        <div id="avatars">
+            <img id="playerAvatar" class="avatar" src="images/avatarDeJugador.jpg.gif" alt="Avatar del Jugador">
+            <img id="monsterAvatar" class="avatar" src="images/niñaAraña.gif" alt="Avatar del Monstruo">          
+        </div>
+        <div id="stats">
+            <div>
+                Vida del Jugador:
+                <div id="playerHealthBar" class="health-bar">
+                    <div id="playerHealthFill" class="health-fill"></div>
+                </div>
+            </div>
+            <div>
+                Vida del Monstruo:
+                <div id="monsterHealthBar" class="health-bar">
+                    <div id="monsterHealthFill" class="health-fill"></div>
+                </div>
+            </div>
+        </div>
+        <div id="weapon-info">Espada actual: <span id="currentWeapon"></span></div>
+        <div id="shield-info">Escudo actual: <span id="currentShield"></span></div>
+        <div id="message"></div>
+        <button id="attackButton" onclick="playerAttack()">Atacar</button>
+        <button id="blockButton" onclick="playerBlock()">Bloquear</button>
+        <button id="skillButton" onclick="useSkill()">Habilidad</button>
+        <button id="changeWeaponButton" class="hidden" onclick="changeWeapon()">Cambiar Conjunto</button>
+        <button id="keepWeaponButton" class="hidden" onclick="keepWeapon()">Mantener Conjunto</button>
+
+        <!-- Cuadro de estadísticas del jugador -->
+        <div id="playerStats" class="player-stats">
+            <h3>Estadísticas del Jugador</h3>
+            <p>Espada: <span id="playerSword"></span></p>
+            <p>Daño de Espada: <span id="playerSwordDamage"></span></p>
+            <p>Escudo: <span id="playerShield"></span></p>
+            <p>Vida del Escudo: <span id="playerShieldHp"></span></p>
+            <p>Probabilidad de Bloqueo: <span id="playerShieldBlock"></span></p>
+            <p>Habilidad Restante: <span id="skillUses"></span></p>
+        </div>
+    </div>
+
+    <div id="end-screen" class="hidden">
+        <h2 id="endMessage"></h2>
+        <button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
+    </div>
+
+    <script src="juego2.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
