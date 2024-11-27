@@ -15,7 +15,6 @@ body {
   background-position: center;
 }
 
-
 .hidden {
   display: none;
 }
@@ -141,6 +140,7 @@ button:disabled {
   50% { transform: scale(1.2); }
   100% { transform: scale(1); }
 }
+
 /* Nuevo estilo para el cuadro de estadísticas del jugador */
 .player-stats {
   position: absolute;
@@ -158,6 +158,13 @@ button:disabled {
   color: #e74c3c;
   margin-top: 0;
 }
+.selected {
+  background-color: #16a085;
+  color: white;
+}
+
+
+
 
 
 

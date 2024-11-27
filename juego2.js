@@ -5,6 +5,17 @@ class Sword {
       this.multiplier = multiplier;
   }
 }
+let selectedClass = '';
+
+function selectClass(playerClass) {
+    selectedClass = playerClass;
+    document.querySelectorAll('#classButtons button').forEach(button => {
+        button.classList.remove('selected');
+    });
+    document.querySelector(`button[onclick="selectClass('${playerClass}')"]`).classList.add('selected');
+}
+
+
 
 class Shield {
   constructor(name, blockChance, hp) {
@@ -45,6 +56,7 @@ class Player {
       this.playerClass = playerClass;
       this.skillUses = 3;
       this.skillActive = false;
+      this.damageReductionActive = false; // Nueva propiedad para Guerrero
   }
 
   attack() {
@@ -52,20 +64,21 @@ class Player {
       const damageMultiplier = this.skillActive && this.playerClass === "Guerrero" ? 2 : 1;
       return Math.floor(baseDamage * this.sword.multiplier * damageMultiplier);
   }
-
   block() {
-      return this.shield && Math.random() < this.shield.blockChance;
+    return this.shield && Math.random() < this.shield.blockChance;
   }
+  
 
   takeShieldDamage(damage) {
-      const shieldBreakSound = document.getElementById("shieldBreakSound");
-      if (this.shield && this.shield.takeDamage(damage)) {
-          shieldBreakSound.play(); // Reproducir sonido de rotura del escudo
-          document.getElementById("message").innerText += `\n¡Tu escudo se ha roto!`; // Agregar mensaje de escudo roto
-          document.getElementById("blockButton").disabled = true; // Desactivar botón de bloquear
-      }
-      updatePlayerStats(); // Actualizar las estadísticas del jugador
+    const shieldBreakSound = document.getElementById("shieldBreakSound");
+    if (this.shield && this.shield.takeDamage(damage)) {
+        shieldBreakSound.play();
+        document.getElementById("message").innerText += `\n¡Tu escudo se ha roto!`;
+        document.getElementById("blockButton").disabled = true;
+    }
+    updatePlayerStats();
   }
+  
 
   recoverHealth(amount) {
       this.hp = Math.min(this.hp + amount, 50); // Recuperar vida del jugador
@@ -76,16 +89,23 @@ class Player {
           switch (this.playerClass) {
               case "Guerrero":
                   this.skillActive = true;
-                  document.getElementById("message").innerText += `\n¡Habilidad de Guerrero activada! Daño aumentado por 2 en esta ronda.`;
+                  this.damageReductionActive = true; // Activar la reducción de daño
+                  document.getElementById("message").innerText += `\n¡Habilidad de Guerrero activada! Daño aumentado por 2 y reducción de daño recibida en un 50% en esta ronda.`;
                   break;
               case "Mago":
                   this.recoverHealth(15);
-                  document.getElementById("message").innerText += `\n¡Habilidad de Mago activada! Recuperas 15 puntos de vida.`;
+                  this.shield.blockChance += 0.05; // Incrementar la probabilidad de bloqueo
+                  document.getElementById("message").innerText += `\n¡Habilidad de Mago activada! Recuperas 15 puntos de vida y tu probabilidad de bloqueo aumenta un 5%.`;
                   updateStats(); // Asegurar que la vida se actualice inmediatamente
                   break;
               case "Explorador":
                   this.shield.repair();
-                  document.getElementById("message").innerText += `\n¡Habilidad de Explorador activada! Escudo reparado completamente.`;
+                  if (Math.random() < 0.5) {
+                      this.upgradeSword();
+                      document.getElementById("message").innerText += `\n¡Habilidad de Explorador activada! Escudo reparado completamente y tu espada ha sido mejorada.`;
+                  } else {
+                      document.getElementById("message").innerText += `\n¡Habilidad de Explorador activada! Escudo reparado completamente.`;
+                  }
                   document.getElementById("blockButton").disabled = false; // Reactivar el botón de bloquear
                   break;
           }
@@ -95,7 +115,27 @@ class Player {
           document.getElementById("message").innerText += `\nNo te quedan habilidades para usar.`;
       }
   }
+
+  upgradeSword() {
+      const swordKeys = Object.keys(swords);
+      const currentSwordIndex = swordKeys.indexOf(this.sword.name.toLowerCase());
+      if (currentSwordIndex < swordKeys.length - 1) {
+          this.sword = swords[swordKeys[currentSwordIndex + 1]];
+      }
+  }
 }
+
+// Asegúrate de desactivar las propiedades de la habilidad del Guerrero después de la ronda.
+function endTurn() {
+  if (player.playerClass === "Guerrero" && player.damageReductionActive) {
+      player.damageReductionActive = false; // Desactivar la reducción de daño después de la ronda
+  }
+  if (player.playerClass === "Guerrero" && player.skillActive) {
+      player.skillActive = false; // Desactivar el aumento de daño después de la ronda
+  }
+}
+
+
 
 // Variables globales
 const swords = {
@@ -118,17 +158,20 @@ let player, monster, monstersDefeated = 0, currentWeaponDrop;
 
 function startGame() {
   const playerName = document.getElementById("playerNameInput").value.trim();
-  const playerClass = document.getElementById("classSelect").value;
   if (!playerName) {
       alert("Por favor, ingresa tu nombre.");
       return;
   }
+  if (!selectedClass) {
+      alert("Por favor, elige tu clase.");
+      return;
+  }
 
-  player = new Player(playerName, playerClass);
+  player = new Player(playerName, selectedClass);
   monster = generateMonster(monstersDefeated);
 
   document.getElementById("playerName").innerText = player.name;
-  document.getElementById("playerClass").innerText = playerClass;
+  document.getElementById("playerClass").innerText = selectedClass;
   updateEquipment();
   updateStats();
   updatePlayerStats();
@@ -136,6 +179,7 @@ function startGame() {
   document.getElementById("start-screen").classList.add("hidden");
   document.getElementById("game-screen").classList.remove("hidden");
 }
+
 
 function generateMonster(index) {
   const isBoss = index === 9;
@@ -295,6 +339,9 @@ function restartGame() {
   document.getElementById("blockButton").disabled = false; // Reactivar el botón de bloqueo
   player.skillUses = 3; // Restablecer usos de habilidades
   player.skillActive = false; // Desactivar habilidad activa
+
+  // Cambiar el avatar del enemigo al monstruo común
+  document.getElementById("monsterAvatar").src = "images/niñaAraña.gif"; // Asegúrate de que la ruta de la imagen sea correcta
 
   document.getElementById("end-screen").classList.add("hidden");
   document.getElementById("start-screen").classList.remove("hidden");

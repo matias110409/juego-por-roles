@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego por Roles</title>
     <link rel="stylesheet" href="juego2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="background">
     <!-- Audio elements for sound effects -->
-    <audio id="blockSound" src="sounds/block-sound.mp3" preload="auto"></audio>
-    <audio id="shieldBreakSound" src="sounds/shield-break-sound.mp3" preload="auto"></audio>
-
+    <audio id="blockSound" src="sounds/shield-guard-6963.mp3" preload="auto"></audio>
+    <audio id="shieldBreakSound" src="sounds/small-rock-break-194553.mp3" preload="auto"></audio>
     <div id="start-screen">
-        <h1>Juego por Roles</h1>
+        <h1>Mazmorras</h1>
         <label for="playerNameInput">Ingresa tu nombre: </label>
         <input type="text" id="playerNameInput">
         <br>
-        <label for="classSelect">Elige tu clase:</label>
-        <select id="classSelect">
-            <option value="Guerrero">Guerrero</option>
-            <option value="Mago">Mago</option>
-            <option value="Explorador">Explorador</option>
-        </select>
+        <label>Elige tu clase:</label>
+        <div id="classButtons">
+            <button onclick="selectClass('Guerrero')"><i class="fa-solid fa-shield"></i> Guerrero</button>
+            <button onclick="selectClass('Mago')"><i class="fa-solid fa-hat-wizard"></i> Mago</button>
+            <button onclick="selectClass('Explorador')"><i class="fa-solid fa-binoculars"></i> Explorador</button>
+        </div>
         <br><br>
         <button onclick="startGame()">Comenzar Juego</button>
     </div>
@@ -75,6 +75,16 @@
     <script src="juego2.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
