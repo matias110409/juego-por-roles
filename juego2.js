@@ -197,12 +197,12 @@ const potions = {
 const specialAbilities = {
   mago: (player, monster) => {
       if (Math.random() < 0.3) {
-          monster.hp += 3;
-          document.getElementById("message").innerText += `\n¡${monster.name} ha recuperado 3 puntos de salud!`;
+          monster.hp += 7;
+          document.getElementById("message").innerText += `\n¡${monster.name} ha recuperado 5 puntos de salud!`;
       }
   },
   guerrero: (player, monster) => {
-      if (Math.random() < 0.15) {
+      if (Math.random() < 0.20) {
           document.getElementById("message").innerText += `\n¡${monster.name} ha bloqueado el ataque de ${player.name} e inflige daño!`;
           const damage = Math.floor(Math.random() * monster.attack) + 1;
           player.hp -= damage;
@@ -212,7 +212,7 @@ const specialAbilities = {
       return false;
   },
   explorador: (player, monster) => {
-      if (Math.random() < 0.1) {
+      if (Math.random() < 0.15) {
           player.shield.hp = 0;
           document.getElementById("message").innerText += `\n¡${monster.name} ha roto el escudo de ${player.name}!`;
           document.getElementById("blockButton").disabled = true;
@@ -488,6 +488,16 @@ function usePotion() {
       document.getElementById("message").innerText += `\nNo tienes pociones disponibles.`;
   }
 }
+function goToClassSelection() {
+  document.getElementById("intro-screen").classList.add("hidden");
+  document.getElementById("start-screen").classList.remove("hidden");
+}
+
+// Asegúrate de que la pantalla de selección de clase esté oculta al inicio
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("intro-screen").classList.remove("hidden");
+  document.getElementById("start-screen").classList.add("hidden");
+});
 
 
 

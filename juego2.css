@@ -192,8 +192,53 @@ button:disabled {
 .potion button:hover {
   background-color: #6c3483;
 }
+#intro-screen {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: rgba(52, 73, 94, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
 
+#intro-screen h1, #intro-screen p, #intro-screen ul {
+  text-align: left;
+}
 
+#intro-screen button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+#intro-screen button:hover {
+  background-color: #c0392b;
+}
+
+#intro-screen button:active {
+  transform: scale(0.98);
+}
+.underline
+{
+  -webkit-text-stroke-width: 0.15px;
+  -webkit-text-stroke-color: #333;
+  color: #e74c3c;
+  
+}
+@media (max-width: 1135px) {
+  .player-stats {
+    position: static;
+    margin-top: 20px;
+    width: 100%;
+  }
+}
+  
 
 
 

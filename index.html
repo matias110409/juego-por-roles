@@ -11,7 +11,25 @@
     <!-- Audio elements for sound effects -->
     <audio id="blockSound" src="sounds/shield-guard-6963.mp3" preload="auto"></audio>
     <audio id="shieldBreakSound" src="sounds/small-rock-break-194553.mp3" preload="auto"></audio>
-    <div id="start-screen">
+
+    <!-- Pantalla de inicio -->
+    <div id="intro-screen">
+        <h1>Bienvenido a Mazmorras</h1>
+        <p>Este es un juego de rol donde te enfrentarás a diversos monstruos y jefes finales. Debes elegir una clase, luchar con monstruos, usar habilidades y estrategias para ganar. Aquí están algunas de las funciones:</p>
+        <ul>
+            <li><strong>Guerrero</strong>: Aumenta su daño y reduce el daño recibido.</li>
+            <li><strong>Mago</strong>: Recupera vida y mejora sus habilidades defensivas.</li>
+            <li><strong>Explorador</strong>: Repara su escudo y tiene la posibilidad de mejorar su espada.</li>
+            <li><strong>Pociones</strong>:<br> <span class="underline">Curación</span>: recupera 20 puntos de vida.<br> <span class="underline">Fortaleza</span> : aumenta el ataque un 15%
+                <br> <span class="underline">Protección</span> : aumenta aumenta probabilidad de bloqueo un 10%<br> <span class="underline">Energía</span> : recarga 2 puntos de Habilidad</li>
+            <li><strong>Brazaletes</strong>:<br> <span class="underline">Fuerza</span> : aumenta atque un 15%.<br> <span class="underline">Defensa</span> : aumenta probabilidad de bloqueo un 10%.<br>
+            <span class="underline">Agilidad</span> : aumenta la probabilidad de esquivar ataques en un 10%.</li> 
+        </ul>
+        <button onclick="goToClassSelection()">Ir a selección de personaje</button>
+    </div>
+
+    <!-- Pantalla de selección de clase -->
+    <div id="start-screen" class="hidden">
         <h1>Mazmorras</h1>
         <label for="playerNameInput">Ingresa tu nombre: </label>
         <input type="text" id="playerNameInput">
@@ -26,6 +44,7 @@
         <button onclick="startGame()">Comenzar Juego</button>
     </div>
 
+    <!-- Pantalla de juego -->
     <div id="game-screen" class="hidden">
         <h2>Jugador: <span id="playerName"></span> (<span id="playerClass"></span>)</h2>
         <div id="avatars">
@@ -70,6 +89,7 @@
         </div>
     </div>
 
+    <!-- Pantalla de fin de juego -->
     <div id="end-screen" class="hidden">
         <h2 id="endMessage"></h2>
         <button id="restartButton" onclick="restartGame()">Reiniciar Juego</button>
@@ -78,6 +98,7 @@
     <script src="juego2.js"></script>
 </body>
 </html>
+
 
 
 
